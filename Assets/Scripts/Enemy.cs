@@ -3,6 +3,7 @@ using UnityEngine;
 public class Enemy : MonoBehaviour, IDamageable
 {
     [SerializeField] private float health = 3f;
+    [SerializeField] public float attackPower = 1;
     //[SerializeField] private float speed = 5f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created

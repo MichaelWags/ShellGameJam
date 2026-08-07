@@ -26,7 +26,6 @@ public class Attack : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("" + collision.gameObject.name);
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("enemy caught");
