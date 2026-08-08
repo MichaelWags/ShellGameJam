@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using NUnit.Framework;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
@@ -28,6 +29,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private LineRenderer lineRenderer;
     private bool isDrawing;
     [SerializeField] private float drawPointFrequency = 0.5f;
+    Gradient gradient;
 
     private void Awake()
     {
@@ -36,6 +38,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         sr = GetComponent<SpriteRenderer>();
         sr.sprite = sprite_walk;
         lineRenderer = GetComponent<LineRenderer>();
+        gradient = lineRenderer.colorGradient;
 
         playerControls.Movement.Draw.performed += OnDrawPerformed;
         playerControls.Movement.Draw.canceled += OnDrawCanceled;
@@ -60,13 +63,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     void Update()
     {
         //get input
-        movement = playerControls.Movement.Move.ReadValue<Vector2>();
-
-        //normalize input
-        if (movement.sqrMagnitude > 1)
-        {
-            movement = movement.normalized;
-        }
+        movement = playerControls.Movement.Move.ReadValue<Vector2>().normalized;
 
         sr.flipX = movement.x > 0;
     }
@@ -94,6 +91,13 @@ public class PlayerController : MonoBehaviour, IDamageable
         knockback = Vector2.zero;
     }
 
+    private void OnDrawPerformed(InputAction.CallbackContext context)
+    {
+        isDrawing = true;
+        sr.sprite = sprite_draw;
+        StartCoroutine(Draw());
+    }
+
     private IEnumerator Draw()
     {
         while(isDrawing)
@@ -109,20 +113,13 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
     }
 
-    private void OnDrawPerformed(InputAction.CallbackContext context)
-    {
-        isDrawing = true;
-        sr.sprite = sprite_draw;
-        StartCoroutine(Draw());
-    }
-
     private void OnDrawCanceled(InputAction.CallbackContext context)
     {
         StartCoroutine(Draw());
         isDrawing = false;
         sr.sprite = sprite_walk;
 
-        if(Vector2.Distance(points[0], points[points.Count - 1]) < 1f) //if ends meet
+        if(points.Count > 2 && Vector2.Distance(points[0], points[points.Count - 1]) < 1f) //if >2 points and ends meet
         {
             points[points.Count - 1] = points[0];
             GameObject attack = Instantiate(attackPrefab);
@@ -131,6 +128,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             Debug.Log("invalid attack");
         }
+
+        StartCoroutine(FadeLines());
 
         foreach (GameObject obj in pointPrefabs)
         {
@@ -141,7 +140,6 @@ public class PlayerController : MonoBehaviour, IDamageable
         }
         points.Clear();
         pointPrefabs.Clear();
-        lineRenderer.enabled = false;
     }
 
     public void TakeDamage(float damageAmount)
@@ -168,5 +166,32 @@ public class PlayerController : MonoBehaviour, IDamageable
             knockback = enemy.transform.position - this.transform.position;
             knockback = knockback.normalized * knockbackMagnitude;
         }
+    }
+
+    private IEnumerator FadeLines()
+    {
+        float alphaPercent = 1f;
+        while(alphaPercent > 0f)
+        {
+            if (isDrawing){break;}
+            yield return new WaitForSeconds(0.01f);
+            alphaPercent -= 0.02f; //decay alpha
+        
+            //fade lines
+            gradient.SetAlphaKeys(new GradientAlphaKey[] {
+                new GradientAlphaKey(alphaPercent, 0.0f),
+                new GradientAlphaKey(alphaPercent, 1.0f)
+            });
+            lineRenderer.colorGradient = gradient;
+        }
+
+        lineRenderer.enabled = false;
+
+        //reset line gradient alpha
+        gradient.SetAlphaKeys(new GradientAlphaKey[] {
+            new GradientAlphaKey(1.0f, 0.0f),
+            new GradientAlphaKey(1.0f, 1.0f)
+        });
+        lineRenderer.colorGradient = gradient;
     }
 }

@@ -9,24 +9,23 @@ public class Attack : MonoBehaviour
     private PolygonCollider2D polygonCollider2D;
     private LineRenderer lr;
     private MeshRenderer mr;
-    public float damageAmount = 1;
+    public float damageAmount = 1f;
     private float alphaRate = 0.5f;
-    private float newAlphaPercent = 1;
+    private float newAlphaPercent = 1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         polygonCollider2D = GetComponent<PolygonCollider2D>();
-        lr = GetComponent<LineRenderer>();
-        mr = GetComponent<MeshRenderer>();
         meshFromPolygonCollider.CreateMesh();
         meshFromPolygonCollider.CreateLine();
+        lr = GetComponent<LineRenderer>();
+        mr = GetComponent<MeshRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        Debug.Log(newAlphaPercent);
         newAlphaPercent -= alphaRate * Time.deltaTime;
         
         //fade lines
@@ -41,7 +40,7 @@ public class Attack : MonoBehaviour
 
         if (newAlphaPercent <= 0.55)
         {
-            mr.enabled = false;
+            //mr.enabled = false;
         }
 
         if (newAlphaPercent <= 0)
