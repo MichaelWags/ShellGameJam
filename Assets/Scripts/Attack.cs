@@ -11,7 +11,7 @@ public class Attack : MonoBehaviour
     private MeshRenderer mr;
     private Material mat;
     public float damageAmount = 1f;
-    private float alphaRate = 0.5f;
+    private float alphaRate = 0.75f;
     private float newAlphaPercent = 1.2f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -47,7 +47,7 @@ public class Attack : MonoBehaviour
         gradient.SetKeys(gradient.colorKeys, alphaKeys);
         lr.colorGradient = gradient;
 
-        if (newAlphaPercent <= 0)
+        if (newAlphaPercent <= 0.05)
         {
             Destroy(gameObject);
         }

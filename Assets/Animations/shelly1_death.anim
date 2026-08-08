@@ -6,7 +6,7 @@ AnimationClip:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: crab1_death
+  m_Name: shelly1_death
   serializedVersion: 7
   m_Legacy: 0
   m_Compressed: 0
@@ -81,7 +81,7 @@ AnimationClip:
   - serializedVersion: 2
     curve:
     - time: 0
-      value: {fileID: -641990822, guid: 95c6a3c84ded86747a7d71b3c6d43550, type: 3}
+      value: {fileID: -1464594802, guid: f85282cc109640c4b85f7285a81a1c68, type: 3}
     attribute: m_Sprite
     path: 
     classID: 212
@@ -122,7 +122,7 @@ AnimationClip:
       isIntCurve: 0
       isSerializeReferenceCurve: 0
     pptrCurveMapping:
-    - {fileID: -641990822, guid: 95c6a3c84ded86747a7d71b3c6d43550, type: 3}
+    - {fileID: -1464594802, guid: f85282cc109640c4b85f7285a81a1c68, type: 3}
   m_AnimationClipSettings:
     serializedVersion: 2
     m_AdditiveReferencePoseClip: {fileID: 0}

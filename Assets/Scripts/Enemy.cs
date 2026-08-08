@@ -8,6 +8,7 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] public float attackPower = 1;
     [SerializeField] protected float moveSpeed = 1f;
     protected Vector2 movement = new Vector2(0f, 0f);
+    protected bool canMove = true;
 
     //COMPONENTS
     protected Animator animator;
@@ -33,7 +34,7 @@ public class Enemy : MonoBehaviour, IDamageable
     // Update is called once per frame
     protected virtual void Update()
     {
-        Move();
+        if(canMove){Move();}
         sr.flipX = movement.x > 0;
     }
 
@@ -45,6 +46,7 @@ public class Enemy : MonoBehaviour, IDamageable
     public virtual void TakeDamage(float damageAmount)
     {
         health -= damageAmount;
+        animator.SetTrigger("wasHurt");
 
         if (health <= 0)
         {
@@ -54,6 +56,7 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private IEnumerator Die()
     {
+        canMove = false;
         particleSystem.Play();
         animator.SetTrigger("wasKilled");
         yield return new WaitForSeconds(1f);

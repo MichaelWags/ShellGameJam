@@ -42,6 +42,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         lineRenderer = GetComponent<LineRenderer>();
         gradient = lineRenderer.colorGradient;
         particleSystem = GetComponent<ParticleSystem>();
+        particleSystem.Stop();
 
         playerControls.Movement.Draw.performed += OnDrawPerformed;
         playerControls.Movement.Draw.canceled += OnDrawCanceled;
@@ -169,6 +170,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         if (collision.gameObject.CompareTag("Enemy"))
         {
             Debug.Log("player hit");
+            animator.SetTrigger("wasHurt");
             GameObject enemy = collision.gameObject;
             TakeDamage(enemy.GetComponent<Enemy>().attackPower);
             knockback = enemy.transform.position - this.transform.position;
