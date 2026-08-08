@@ -12,7 +12,7 @@ public class Attack : MonoBehaviour
     private Material mat;
     public float damageAmount = 1f;
     private float alphaRate = 0.5f;
-    private float newAlphaPercent = 1.15f;
+    private float newAlphaPercent = 1.2f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -32,7 +32,7 @@ public class Attack : MonoBehaviour
 
         //mat.color = new Color(200f, 100f, 200f, 0f); Couldnt get working
         //disappear inner
-        if (newAlphaPercent <= 1)
+        if (newAlphaPercent <= 1.05)
         {
             mr.enabled = false;
         }

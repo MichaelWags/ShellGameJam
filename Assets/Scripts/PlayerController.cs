@@ -12,14 +12,16 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Vector2 knockback;
 
     //PLAYER MOVEMENT
-    public float moveSpeed = 5f;
+    public float baseMoveSpeed = 5f;
+    public float moveSpeed = 0f;
 
     private PlayerControls playerControls;
     private Vector2 movement;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-    public Sprite sprite_walk;
-    public Sprite sprite_draw;
+    private Animator animator;
+    public bool canMove = true;
+    private ParticleSystem particleSystem;
 
     //DRAWING
     [SerializeField] private GameObject pointPrefab;
@@ -27,7 +29,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private List<Vector2> points = new List<Vector2>();
     private List<GameObject> pointPrefabs = new List<GameObject>();
     private LineRenderer lineRenderer;
-    private bool isDrawing;
+    private bool isDrawing = false;
     [SerializeField] private float drawPointFrequency = 0.5f;
     Gradient gradient;
 
@@ -36,9 +38,10 @@ public class PlayerController : MonoBehaviour, IDamageable
         playerControls = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
-        sr.sprite = sprite_walk;
+        animator = GetComponent<Animator>();
         lineRenderer = GetComponent<LineRenderer>();
         gradient = lineRenderer.colorGradient;
+        particleSystem = GetComponent<ParticleSystem>();
 
         playerControls.Movement.Draw.performed += OnDrawPerformed;
         playerControls.Movement.Draw.canceled += OnDrawCanceled;
@@ -62,15 +65,19 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     void Update()
     {
+        moveSpeed = isDrawing ? baseMoveSpeed * 1.5f : baseMoveSpeed;
+        
         //get input
         movement = playerControls.Movement.Move.ReadValue<Vector2>().normalized;
 
         sr.flipX = movement.x > 0;
+        animator.SetBool("isDrawing", isDrawing);
+        animator.SetBool("isMoving", movement.magnitude > 0);        
     }
 
     private void FixedUpdate()
     {
-        Move();
+        if(canMove) {Move();}
     }
 
     private void LateUpdate()
@@ -94,7 +101,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void OnDrawPerformed(InputAction.CallbackContext context)
     {
         isDrawing = true;
-        sr.sprite = sprite_draw;
         StartCoroutine(Draw());
     }
 
@@ -117,19 +123,18 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         StartCoroutine(Draw());
         isDrawing = false;
-        sr.sprite = sprite_walk;
 
         if(points.Count > 2 && Vector2.Distance(points[0], points[points.Count - 1]) < 1f) //if >2 points and ends meet
         {
             points[points.Count - 1] = points[0];
             GameObject attack = Instantiate(attackPrefab);
             attack.GetComponent<PolygonCollider2D>().SetPath(0, points);
+            lineRenderer.enabled = false;
         } else
         {
             Debug.Log("invalid attack");
+            StartCoroutine(FadeLines());
         }
-
-        StartCoroutine(FadeLines());
 
         foreach (GameObject obj in pointPrefabs)
         {
@@ -147,12 +152,15 @@ public class PlayerController : MonoBehaviour, IDamageable
         health -= damageAmount;
         if(health <= 0f)
         {
-            Die();
+            StartCoroutine(Die());
         }
     }
 
-    private void Die()
+    private IEnumerator Die()
     {
+        particleSystem.Play();
+        animator.SetTrigger("wasKilled");
+        yield return new WaitForSeconds(1f);
         Destroy(gameObject);
     }
 
