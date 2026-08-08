@@ -53,7 +53,7 @@ public class MeshFromPolygonCollider2D : MonoBehaviour
         }
 
         meshRenderer.enabled = true;
-        meshRenderer.material = interiorMat;
+        //meshRenderer.material = interiorMat;
         // FIXME: only works at 0,0,0 coordinates for some reason. Otherwise doubles each coordinate for mesh
         meshFilter.mesh = polygonCollider2D.CreateMesh(false, false);
         meshFilter.mesh.Optimize();

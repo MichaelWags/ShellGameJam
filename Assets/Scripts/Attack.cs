@@ -9,9 +9,10 @@ public class Attack : MonoBehaviour
     private PolygonCollider2D polygonCollider2D;
     private LineRenderer lr;
     private MeshRenderer mr;
+    private Material mat;
     public float damageAmount = 1f;
     private float alphaRate = 0.5f;
-    private float newAlphaPercent = 1f;
+    private float newAlphaPercent = 1.15f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -21,12 +22,20 @@ public class Attack : MonoBehaviour
         meshFromPolygonCollider.CreateLine();
         lr = GetComponent<LineRenderer>();
         mr = GetComponent<MeshRenderer>();
+        mat = mr.material;
     }
 
     // Update is called once per frame
     void Update()
     {
         newAlphaPercent -= alphaRate * Time.deltaTime;
+
+        //mat.color = new Color(200f, 100f, 200f, 0f); Couldnt get working
+        //disappear inner
+        if (newAlphaPercent <= 1)
+        {
+            mr.enabled = false;
+        }
         
         //fade lines
         Gradient gradient = lr.colorGradient;
@@ -37,11 +46,6 @@ public class Attack : MonoBehaviour
         }
         gradient.SetKeys(gradient.colorKeys, alphaKeys);
         lr.colorGradient = gradient;
-
-        if (newAlphaPercent <= 0.55)
-        {
-            //mr.enabled = false;
-        }
 
         if (newAlphaPercent <= 0)
         {
