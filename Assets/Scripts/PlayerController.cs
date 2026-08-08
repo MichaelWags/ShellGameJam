@@ -17,6 +17,8 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Vector2 movement;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
+    public Sprite sprite_walk;
+    public Sprite sprite_draw;
 
     //DRAWING
     [SerializeField] private GameObject pointPrefab;
@@ -32,6 +34,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         playerControls = new PlayerControls();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
+        sr.sprite = sprite_walk;
         lineRenderer = GetComponent<LineRenderer>();
 
         playerControls.Movement.Draw.performed += OnDrawPerformed;
@@ -64,6 +67,8 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             movement = movement.normalized;
         }
+
+        sr.flipX = movement.x > 0;
     }
 
     private void FixedUpdate()
@@ -107,6 +112,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private void OnDrawPerformed(InputAction.CallbackContext context)
     {
         isDrawing = true;
+        sr.sprite = sprite_draw;
         StartCoroutine(Draw());
     }
 
@@ -114,6 +120,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         StartCoroutine(Draw());
         isDrawing = false;
+        sr.sprite = sprite_walk;
 
         if(Vector2.Distance(points[0], points[points.Count - 1]) < 1f) //if ends meet
         {
@@ -151,7 +158,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
