@@ -12,9 +12,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Vector2 knockback;
 
     //PLAYER MOVEMENT
-    public float baseMoveSpeed = 5f;
-    public float moveSpeed = 0f;
-
+    [SerializeField] private float baseMoveSpeed = 4f;
+    private float moveSpeed = 0f;
+    [SerializeField] private float drawSpeedMult = 1.3f;
     private PlayerControls playerControls;
     private Vector2 movement;
     private Rigidbody2D rb;
@@ -66,10 +66,15 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     void Update()
     {
-        moveSpeed = isDrawing ? baseMoveSpeed * 1.5f : baseMoveSpeed;
+        moveSpeed = isDrawing ? baseMoveSpeed * drawSpeedMult : baseMoveSpeed;
         
         //get input
-        movement = playerControls.Movement.Move.ReadValue<Vector2>().normalized;
+        movement = playerControls.Movement.Move.ReadValue<Vector2>()/*.normalized*/;
+        //unNormalize
+        movement.x = movement.x > 0f ? 1f : movement.x;
+        movement.x = movement.x < 0f ? -1f : movement.x;
+        movement.y = movement.y > 0f ? 1f : movement.y;
+        movement.y = movement.y < 0f ? -1f : movement.y;
 
         sr.flipX = movement.x > 0;
         animator.SetBool("isDrawing", isDrawing);
@@ -78,7 +83,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void FixedUpdate()
     {
-        if(canMove) {Move();}
+        if(canMove){Move();}
     }
 
     private void LateUpdate()
@@ -134,6 +139,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         } else
         {
             Debug.Log("invalid attack");
+            points.Clear();
             StartCoroutine(FadeLines());
         }
 
@@ -159,6 +165,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private IEnumerator Die()
     {
+        canMove = false;
         particleSystem.Play();
         animator.SetTrigger("wasKilled");
         yield return new WaitForSeconds(1f);

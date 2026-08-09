@@ -87,7 +87,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 5
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -1464594802, guid: f85282cc109640c4b85f7285a81a1c68, type: 3}
+  m_Sprite: {fileID: 935223302, guid: 95c6a3c84ded86747a7d71b3c6d43550, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -109,10 +109,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 805527caf2d3bbd44b6a3832e2d8011e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Crab
-  health: 3
+  health: 1
   attackPower: 1
-  moveSpeed: 2
-  moveXDir: 0
+  moveSpeed: 1.6
+  moveXDir: -1
   moveYDir: 0
 --- !u!50 &2141290673897597611
 Rigidbody2D:
@@ -1054,7 +1054,7 @@ ParticleSystem:
           m_PostInfinity: 2
           m_RotationOrder: 4
     arc:
-      value: 360
+      value: 180
       mode: 0
       spread: 0
       speed:
@@ -1226,7 +1226,7 @@ ParticleSystem:
       countCurve:
         serializedVersion: 2
         minMaxState: 0
-        scalar: 30
+        scalar: 10
         minScalar: 30
         maxCurve:
           serializedVersion: 2

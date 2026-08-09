@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using System;
 
 public class Enemy : MonoBehaviour, IDamageable
 {
@@ -7,6 +8,7 @@ public class Enemy : MonoBehaviour, IDamageable
     [SerializeField] protected float health = 3f;
     [SerializeField] public float attackPower = 1;
     [SerializeField] protected float moveSpeed = 1f;
+    [SerializeField] protected float enemyProfit = 10f;
     protected Vector2 movement = new Vector2(0f, 0f);
     protected bool canMove = true;
 
@@ -54,12 +56,15 @@ public class Enemy : MonoBehaviour, IDamageable
         }
     }
 
+    public static event Action<float> OnEnemyKilled;
+
     private IEnumerator Die()
     {
         canMove = false;
         particleSystem.Play();
         animator.SetTrigger("wasKilled");
         yield return new WaitForSeconds(1f);
+        OnEnemyKilled?.Invoke(enemyProfit);
         Destroy(gameObject);
     }
 }
