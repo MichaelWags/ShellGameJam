@@ -60,11 +60,11 @@ public class Enemy : MonoBehaviour, IDamageable
 
     private IEnumerator Die()
     {
+        OnEnemyKilled?.Invoke(enemyProfit);
         canMove = false;
         particleSystem.Play();
         animator.SetTrigger("wasKilled");
         yield return new WaitForSeconds(1f);
-        OnEnemyKilled?.Invoke(enemyProfit);
         Destroy(gameObject);
     }
 }

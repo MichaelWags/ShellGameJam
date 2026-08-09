@@ -7,13 +7,13 @@ using NUnit.Framework;
 public class PlayerController : MonoBehaviour, IDamageable
 {
     //STATS
-    [SerializeField] private float health = 10f;
+    private float health = 10f;
+    [SerializeField] private float healthMax = 10f;
     [SerializeField] private float knockbackMagnitude = 1f;
-    private Vector2 knockback;
 
     //PLAYER MOVEMENT
     [SerializeField] private float baseMoveSpeed = 4f;
-    private float moveSpeed = 0f;
+    [SerializeField] private float moveSpeed = 0f;
     [SerializeField] private float drawSpeedMult = 1.3f;
     private PlayerControls playerControls;
     private Vector2 movement;
@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     private Animator animator;
     public bool canMove = true;
     private ParticleSystem particleSystem;
+    private Vector2 knockback;
 
     //DRAWING
     [SerializeField] private GameObject pointPrefab;
@@ -51,7 +52,9 @@ public class PlayerController : MonoBehaviour, IDamageable
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        health = healthMax;
+        GameManager.Instance.playerHealth = health;
+        GameManager.Instance.playerHealthMax = healthMax;
     }
 
     private void OnEnable()
@@ -157,6 +160,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void TakeDamage(float damageAmount)
     {
         health -= damageAmount;
+        GameManager.Instance.playerHealth = health;
         if(health <= 0f)
         {
             StartCoroutine(Die());

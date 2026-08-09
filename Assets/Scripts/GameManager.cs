@@ -16,8 +16,8 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    public float playerHealth = 10f;
-    public float playerHealthMax = 10f;
+    public float playerHealth = 0f;
+    public float playerHealthMax = 0f;
     public int kills = 0;
     public float gameTime = 0f;
     public float profit = 0f;
@@ -45,14 +45,15 @@ public class GameManager : MonoBehaviour
         UpdateShellCommandUI();
     }
 
-    private void AddKill()
+    private void AddKill(float enemyProfit)
     {
         kills ++;
+        AddProfit(enemyProfit);
     }
 
-    private void AddProfit(float profitToAdd)
+    public void AddProfit(float profitToAdd)
     {
-        
+        profit += profitToAdd;
     }
 
     public ShellCommandController shellCommandController;
