@@ -187,6 +187,13 @@ public class PlayerController : MonoBehaviour, IDamageable
             knockback = enemy.transform.position - this.transform.position;
             knockback = knockback.normalized * knockbackMagnitude;
         }
+        else if (collision.gameObject.CompareTag("Collectable"))
+        {
+            Debug.Log("got collectable");
+            GameManager.Instance.AddProfit(collision.gameObject.GetComponent<Collectable>().profit);
+            Destroy(collision.gameObject);
+        }
+
     }
 
     private IEnumerator FadeLines()

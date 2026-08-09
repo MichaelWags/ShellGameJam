@@ -61,5 +61,11 @@ public class Attack : MonoBehaviour
             GameObject enemy = collision.gameObject;
             enemy.GetComponent<Enemy>().TakeDamage(damageAmount);
         }
+
+        if (collision.gameObject.CompareTag("CollectableSpawner"))
+        {
+            Debug.Log("collectable spawner caught");
+            collision.gameObject.GetComponent<CollectableSpawner>().Collect();
+        }
     }
 }
