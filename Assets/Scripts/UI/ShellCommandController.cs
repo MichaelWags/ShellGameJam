@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class ShellCommandController : MonoBehaviour
 {
-    private bool isOpen = true;
+    public bool isOpen = true;
     private Image img;
     [SerializeField] private Sprite openCommand;
     [SerializeField] private Sprite closedCommand;
@@ -18,8 +18,10 @@ public class ShellCommandController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        GameManager.Instance.shellCommandController = this;
+        if(gameObject.name == "ShellCommand"){GameManager.Instance.shellCommandController = this;}
+        if(gameObject.name == "OptionsMenu"){GameManager.Instance.optionsMenu = this;}
         img = GetComponent<Image>();
+        if(!isOpen){isOpen = true; ToggleOpen();}
     }
 
     // Update is called once per frame
@@ -30,7 +32,6 @@ public class ShellCommandController : MonoBehaviour
 
     public void ToggleOpen()
     {
-        Debug.Log("buttonClicked");
         isOpen = !isOpen;
 
         img.sprite = isOpen ? openCommand : closedCommand;

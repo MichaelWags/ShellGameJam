@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -38,7 +39,7 @@ public class GameManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        StartGame();
     }
 
     public void StartGame()
@@ -80,6 +81,7 @@ public class GameManager : MonoBehaviour
     }
 
     public ShellCommandController shellCommandController;
+    public ShellCommandController optionsMenu;
 
     private void UpdateShellCommandUI()
     {
@@ -99,5 +101,24 @@ public class GameManager : MonoBehaviour
 
         //profit
         shellCommandController.profitLabel.text = "Profit: $" + profit;
+    }
+
+    public void OnPause()
+    {
+        isPaused = !isPaused;
+        Time.timeScale = isPaused ? 0f : 1f;
+        if (isPaused && !optionsMenu.isOpen)
+        {
+            optionsMenu.ToggleOpen();
+        }
+        if (!isPaused && optionsMenu.isOpen)
+        {
+            optionsMenu.ToggleOpen();
+        }
+    }
+
+    public void OnOpenCommand()
+    {
+        shellCommandController.ToggleOpen();
     }
 }

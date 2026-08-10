@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 29726807904948279}
   - component: {fileID: 8624598716207987134}
   - component: {fileID: -7196871774207860537}
+  - component: {fileID: 7314483950568020454}
   m_Layer: 0
   m_Name: Point
   m_TagString: Untagged
@@ -4848,8 +4849,8 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
-  m_Resource: {fileID: 8300000, guid: 34db08b75c8fd12478f8170041b0fbfe, type: 3}
-  m_PlayOnAwake: 1
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 0
   m_Volume: 0.5
   m_Pitch: 1
   Loop: 0
@@ -4934,3 +4935,23 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &7314483950568020454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4962210426928292462}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 49c62b943a4975a4d91c61b63b06abf8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayRandomSFX
+  clips:
+  - {fileID: 8300000, guid: 34db08b75c8fd12478f8170041b0fbfe, type: 3}
+  - {fileID: 8300000, guid: 828dc83e182335a4eb458c8f34e9e415, type: 3}
+  - {fileID: 8300000, guid: e7b94ea2c1cbe3647a19f3539fc241e3, type: 3}
+  - {fileID: 8300000, guid: 8b5b900bc3916094193be4847de93942, type: 3}
+  - {fileID: 8300000, guid: 4306a79fb2c8fa34591af7e3bb86233f, type: 3}
+  - {fileID: 8300000, guid: f520f780e8bc93f4eba73f33ba64076c, type: 3}
+  - {fileID: 8300000, guid: 60d74771aba83c84a8073fe9a54f9470, type: 3}

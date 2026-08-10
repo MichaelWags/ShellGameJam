@@ -134,7 +134,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
         if(points.Count > 2 && Vector2.Distance(points[0], points[points.Count - 1]) < 1f) //if >2 points and ends meet
         {
-            points[points.Count - 1] = points[0];
+            //points[points.Count - 1] = points[0]; //set last point to first
             GameObject attack = Instantiate(attackPrefab);
             attack.GetComponent<PolygonCollider2D>().SetPath(0, points);
             lineRenderer.enabled = false;
@@ -214,11 +214,5 @@ public class PlayerController : MonoBehaviour, IDamageable
             new GradientAlphaKey(1.0f, 1.0f)
         });
         lineRenderer.colorGradient = gradient;
-    }
-
-    public void OnPause()
-    {
-        GameManager.Instance.isPaused = !GameManager.Instance.isPaused;
-        Time.timeScale = GameManager.Instance.isPaused ? 0f : 1f;
     }
 }

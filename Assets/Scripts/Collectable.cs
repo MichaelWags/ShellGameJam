@@ -11,7 +11,6 @@ public class Collectable : MonoBehaviour
     public float profit = 3f;
     public bool isShell = false;
     private float randXMag = 0f;
-    [SerializeField] private AudioClip collectCoin;
 
     void Awake()
     {
@@ -43,7 +42,6 @@ public class Collectable : MonoBehaviour
             float distance = Vector3.Distance(target.position, transform.position);
             if(distance < 0.5f){
                 Debug.Log("got collectable");
-                GetComponent<AudioSource>().PlayOneShot(collectCoin, 1f);
                 GameManager.Instance.AddProfit(profit);
                 if(isShell){GameManager.Instance.AddShell();}
                 Destroy(gameObject);
