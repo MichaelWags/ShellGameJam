@@ -172,6 +172,7 @@ public class PlayerController : MonoBehaviour, IDamageable
         particleSystem.Play();
         animator.SetTrigger("wasKilled");
         yield return new WaitForSeconds(1f);
+        UnityEngine.SceneManagement.SceneManager.LoadScene("PlayScene");
         Destroy(gameObject);
     }
 

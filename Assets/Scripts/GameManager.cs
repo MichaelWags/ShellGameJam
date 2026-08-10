@@ -117,7 +117,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void OnOpenCommand()
+    public void OnOpenStats()
     {
         shellCommandController.ToggleOpen();
     }
