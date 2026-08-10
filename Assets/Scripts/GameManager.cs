@@ -14,13 +14,16 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
     public float playerHealth = 0f;
     public float playerHealthMax = 0f;
     public int kills = 0;
+    public int shells = 0;
     public float gameTime = 0f;
     public float profit = 0f;
+    [SerializeField] private AudioClip collectSFX;
 
     private void OnEnable()
     {
@@ -38,6 +41,21 @@ public class GameManager : MonoBehaviour
         
     }
 
+    public void StartGame()
+    {
+        playerHealth = 0f;
+        playerHealthMax = 0f;
+        kills = 0;
+        shells = 0;
+        gameTime = 0f;
+        profit = 0f;
+    }
+
+    public void EndGame()
+    {
+        Time.timeScale = 0f;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -50,9 +68,14 @@ public class GameManager : MonoBehaviour
         kills ++;
         AddProfit(enemyProfit);
     }
+    public void AddShell()
+    {
+        shells ++;
+    }
 
     public void AddProfit(float profitToAdd)
     {
+        GetComponent<AudioSource>().PlayOneShot(collectSFX);
         profit += profitToAdd;
     }
 
@@ -65,6 +88,9 @@ public class GameManager : MonoBehaviour
 
         //kills
         shellCommandController.killsLabel.text = "Kills: " + kills;
+
+        //shells
+        shellCommandController.shellsLabel.text = "Shells: " + shells;
 
         //timer
         int seconds = (int)gameTime % 60;

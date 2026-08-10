@@ -11,6 +11,7 @@ public class ShellCommandController : MonoBehaviour
     [SerializeField] private Sprite closedCommand;
     public TextMeshProUGUI healthLabel;
     public TextMeshProUGUI killsLabel;
+    public TextMeshProUGUI shellsLabel;
     public TextMeshProUGUI timeLabel;
     public TextMeshProUGUI profitLabel;
 

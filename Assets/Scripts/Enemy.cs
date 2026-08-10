@@ -1,6 +1,13 @@
 using System.Collections;
 using UnityEngine;
 using System;
+using System.Runtime.CompilerServices;
+
+[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(ParticleSystem))]
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(SpriteRenderer))]
 
 public class Enemy : MonoBehaviour, IDamageable
 {
@@ -63,6 +70,7 @@ public class Enemy : MonoBehaviour, IDamageable
         OnEnemyKilled?.Invoke(enemyProfit);
         canMove = false;
         particleSystem.Play();
+        GetComponent<AudioSource>().Play();
         animator.SetTrigger("wasKilled");
         yield return new WaitForSeconds(1f);
         Destroy(gameObject);

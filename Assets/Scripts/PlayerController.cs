@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
-using NUnit.Framework;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
@@ -182,18 +181,12 @@ public class PlayerController : MonoBehaviour, IDamageable
         {
             Debug.Log("player hit");
             animator.SetTrigger("wasHurt");
+            GetComponent<AudioSource>().Play();
             GameObject enemy = collision.gameObject;
             TakeDamage(enemy.GetComponent<Enemy>().attackPower);
             knockback = enemy.transform.position - this.transform.position;
             knockback = knockback.normalized * knockbackMagnitude;
         }
-        else if (collision.gameObject.CompareTag("Collectable"))
-        {
-            Debug.Log("got collectable");
-            GameManager.Instance.AddProfit(collision.gameObject.GetComponent<Collectable>().profit);
-            Destroy(collision.gameObject);
-        }
-
     }
 
     private IEnumerator FadeLines()

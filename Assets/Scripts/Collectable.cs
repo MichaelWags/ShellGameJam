@@ -4,11 +4,14 @@ public class Collectable : MonoBehaviour
 {
     private Rigidbody2D rb;
     public Transform target;
-    [SerializeField] private float speed = 1f;
+    [SerializeField] private float speed = 5f;
     private float magnitude = 1f;
     private Vector2 movement = Vector2.up;
     private float timer = 0f;
     public float profit = 3f;
+    public bool isShell = false;
+    private float randXMag = 0f;
+    [SerializeField] private AudioClip collectCoin;
 
     void Awake()
     {
@@ -19,6 +22,7 @@ public class Collectable : MonoBehaviour
     {
         target = GameObject.Find("Player").transform;
         //randomize x movement
+        randXMag = isShell ? 0f : Random.Range(-0.5f, 0.5f);
     }
 
     // Update is called once per frame
@@ -29,23 +33,31 @@ public class Collectable : MonoBehaviour
 
     void FixedUpdate()
     {
-        Debug.Log(timer += Time.deltaTime);
-        magnitude = Mathf.Pow(0.5f * timer, 3f) - 1.8f * Mathf.Pow(0.5f * timer, 2f) + 1f;
+        timer += Time.deltaTime;
+        magnitude = Mathf.Pow(timer, 3f) - 1.8f * Mathf.Pow(timer, 2f) + 1f;
 
-        if(timer > 2.2f && target != null)
+        if(timer > 1.1f && target != null)
         {
             movement = (target.position - transform.position).normalized;
+
+            float distance = Vector3.Distance(target.position, transform.position);
+            if(distance < 0.5f){
+                Debug.Log("got collectable");
+                GetComponent<AudioSource>().PlayOneShot(collectCoin, 1f);
+                GameManager.Instance.AddProfit(profit);
+                if(isShell){GameManager.Instance.AddShell();}
+                Destroy(gameObject);
+            }
+        }
+        else
+        {
+            movement.x = randXMag;
+            movement.y = 1f;
+            movement = movement.normalized;
         }
 
-        float distance = Vector3.Distance(target.position, transform.position);
-        if(distance < 0.1f){
-            Debug.Log("got collectable");
-            GameManager.Instance.AddProfit(profit);
-            Destroy(gameObject);
-        }
-
-        /*movement.x = Mathf.Round(movement.x * magnitude * speed * Time.fixedDeltaTime * 16f) / 16f;
-        movement.y = Mathf.Round(movement.y * magnitude * speed * Time.fixedDeltaTime * 16f) / 16f;*/
+        //movement.x = Mathf.Round(movement.x * magnitude * speed * Time.fixedDeltaTime * 16f) / 16f;
+        //movement.y = Mathf.Round(movement.y * magnitude * speed * Time.fixedDeltaTime * 16f) / 16f;
         movement.x = movement.x * magnitude * speed * Time.fixedDeltaTime;
         movement.y = movement.y * magnitude * speed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + movement);
