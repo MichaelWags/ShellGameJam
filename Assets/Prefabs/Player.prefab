@@ -117,7 +117,7 @@ MonoBehaviour:
   knockbackMagnitude: 1
   baseMoveSpeed: 4
   moveSpeed: 0
-  drawSpeedMult: 1.4
+  drawSpeedMult: 0.5
   canMove: 1
   pointPrefab: {fileID: 4962210426928292462, guid: 73e4305acfa659847933706ec2066710, type: 3}
   attackPrefab: {fileID: 6315564313936450930, guid: 8b994df7db9c16c4b95d6fedc9a2df4a, type: 3}

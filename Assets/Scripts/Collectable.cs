@@ -54,10 +54,10 @@ public class Collectable : MonoBehaviour
             movement = movement.normalized;
         }
 
-        movement.x = Mathf.Round(movement.x * magnitude * speed * Time.fixedDeltaTime * 16f) / 16f;
-        movement.y = Mathf.Round(movement.y * magnitude * speed * Time.fixedDeltaTime * 16f) / 16f;
-        //movement.x = movement.x * magnitude * speed * Time.fixedDeltaTime;
-        //movement.y = movement.y * magnitude * speed * Time.fixedDeltaTime;
+        //movement.x = Mathf.Round(movement.x * magnitude * speed * Time.fixedDeltaTime * 16f) / 16f;
+        //movement.y = Mathf.Round(movement.y * magnitude * speed * Time.fixedDeltaTime * 16f) / 16f;
+        movement.x = movement.x * magnitude * speed * Time.fixedDeltaTime;
+        movement.y = movement.y * magnitude * speed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + movement);
     }
 }

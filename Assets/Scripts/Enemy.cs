@@ -68,6 +68,7 @@ public class Enemy : MonoBehaviour, IDamageable
     private IEnumerator Die()
     {
         OnEnemyKilled?.Invoke(enemyProfit);
+        attackPower = 0f;
         canMove = false;
         particleSystem.Play();
         GetComponent<AudioSource>().Play();

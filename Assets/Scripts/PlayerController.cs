@@ -2,13 +2,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using System.Collections;
+using NUnit.Framework;
 
 public class PlayerController : MonoBehaviour, IDamageable
 {
     //STATS
     private float health = 10f;
     [SerializeField] private float healthMax = 10f;
-    [SerializeField] private float knockbackMagnitude = 1f;
+    [SerializeField] private float knockbackMagnitude = 0.5f;
+    public bool isVulnerable = true;
+    [SerializeField] private float iFrames = 2f;
 
     //PLAYER MOVEMENT
     [SerializeField] private float baseMoveSpeed = 4f;
@@ -98,8 +101,10 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void Move()
     {
-        movement.x = Mathf.Round(movement.x * moveSpeed * Time.fixedDeltaTime * 16f) / 16f;
-        movement.y = Mathf.Round(movement.y * moveSpeed * Time.fixedDeltaTime * 16f) / 16f;
+        //movement.x = Mathf.Round(movement.x * moveSpeed * Time.fixedDeltaTime * 16f) / 16f;
+        //movement.y = Mathf.Round(movement.y * moveSpeed * Time.fixedDeltaTime * 16f) / 16f;
+        movement.x = movement.x * moveSpeed * Time.fixedDeltaTime;
+        movement.y = movement.y * moveSpeed * Time.fixedDeltaTime;
         knockback.x = Mathf.Round(knockback.x * 16f) / 16f;
         knockback.y = Mathf.Round(knockback.y * 16f) / 16f;
         rb.MovePosition(rb.position + movement - knockback);
@@ -178,7 +183,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        if (collision.gameObject.CompareTag("Enemy") && isVulnerable && collision.gameObject.GetComponent<Enemy>().attackPower > 0f)
         {
             Debug.Log("player hit");
             animator.SetTrigger("wasHurt");
@@ -187,6 +192,7 @@ public class PlayerController : MonoBehaviour, IDamageable
             TakeDamage(enemy.GetComponent<Enemy>().attackPower);
             knockback = enemy.transform.position - this.transform.position;
             knockback = knockback.normalized * knockbackMagnitude;
+            StartCoroutine(TemporaryInvincibility(iFrames));
         }
     }
 
@@ -215,5 +221,12 @@ public class PlayerController : MonoBehaviour, IDamageable
             new GradientAlphaKey(1.0f, 1.0f)
         });
         lineRenderer.colorGradient = gradient;
+    }
+
+    private IEnumerator TemporaryInvincibility(float seconds)
+    {
+        isVulnerable = false;
+        yield return new WaitForSeconds(seconds);
+        isVulnerable = true;
     }
 }

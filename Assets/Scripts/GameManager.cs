@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
 
     public void AddProfit(float profitToAdd)
     {
-        GetComponent<AudioSource>().PlayOneShot(collectSFX);
+        GetComponent<AudioSource>().PlayOneShot(collectSFX, 0.7f);
         profit += profitToAdd;
     }
 

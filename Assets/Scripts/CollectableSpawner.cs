@@ -33,7 +33,7 @@ public class CollectableSpawner : MonoBehaviour
         int amount = Random.Range(max, min);
         for(int i = 0; i < amount; i++)
         {
-            yield return new WaitForSeconds(delay);
+            yield return new WaitForSeconds(delay *= 0.9f);
             Instantiate(collectablePrefab, transform.position, transform.rotation);
         }
 
