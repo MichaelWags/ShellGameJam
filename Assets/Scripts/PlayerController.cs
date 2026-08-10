@@ -215,4 +215,10 @@ public class PlayerController : MonoBehaviour, IDamageable
         });
         lineRenderer.colorGradient = gradient;
     }
+
+    public void OnPause()
+    {
+        GameManager.Instance.isPaused = !GameManager.Instance.isPaused;
+        Time.timeScale = GameManager.Instance.isPaused ? 0f : 1f;
+    }
 }

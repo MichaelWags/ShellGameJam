@@ -14,7 +14,6 @@ public class GameManager : MonoBehaviour
         }
 
         Instance = this;
-        DontDestroyOnLoad(gameObject);
     }
 
     public float playerHealth = 0f;
@@ -23,6 +22,7 @@ public class GameManager : MonoBehaviour
     public int shells = 0;
     public float gameTime = 0f;
     public float profit = 0f;
+    public bool isPaused = false;
     [SerializeField] private AudioClip collectSFX;
 
     private void OnEnable()
@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
     void Update()
     {
         gameTime += Time.deltaTime;
-        UpdateShellCommandUI();
+        if(shellCommandController != null){UpdateShellCommandUI();}
     }
 
     private void AddKill(float enemyProfit)
