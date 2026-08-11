@@ -44,7 +44,6 @@ public class Enemy : MonoBehaviour, IDamageable
     protected virtual void Update()
     {
         if(canMove){Move();}
-        sr.flipX = movement.x > 0;
     }
 
     public virtual void Move()
@@ -55,11 +54,14 @@ public class Enemy : MonoBehaviour, IDamageable
     public virtual void TakeDamage(float damageAmount)
     {
         health -= damageAmount;
-        animator.SetTrigger("wasHurt");
 
         if (health <= 0)
         {
             StartCoroutine(Die());
+        }
+        else
+        {
+            animator.SetTrigger("wasHurt");   
         }
     }
 

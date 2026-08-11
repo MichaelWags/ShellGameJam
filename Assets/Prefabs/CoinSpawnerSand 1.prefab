@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5255368629791270439}
   - component: {fileID: 7615190857366895519}
   - component: {fileID: 612381112295936300}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: CoinSpawnerSand 1
   m_TagString: CollectableSpawner
   m_Icon: {fileID: 0}

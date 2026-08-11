@@ -112,7 +112,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Crab
   health: 2
   attackPower: 1
-  moveSpeed: 2
+  moveSpeed: 3
   enemyProfit: 15
   moveXDir: -1
   moveYDir: 0

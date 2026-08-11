@@ -22,8 +22,10 @@ public class Crab : Enemy
 
     public override void Move()
     {
-        movement.x = Mathf.Round(moveXDir * moveSpeed * Time.fixedDeltaTime * 16f) / 16f;
-        movement.y = Mathf.Round(moveYDir * moveSpeed * Time.fixedDeltaTime * 16f) / 16f;
+        //movement.x = Mathf.Round(moveXDir * moveSpeed * Time.fixedDeltaTime * 16f) / 16f;
+        //movement.y = Mathf.Round(moveYDir * moveSpeed * Time.fixedDeltaTime * 16f) / 16f;
+        movement.x = moveXDir * moveSpeed * Time.fixedDeltaTime;
+        movement.y = moveYDir * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + movement);
     }
 

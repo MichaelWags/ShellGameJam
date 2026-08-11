@@ -20,6 +20,8 @@ public class Clam : Enemy
     protected override void Update()
     {
         base.Update();
+
+        sr.flipX = movement.x > 0f;
     }
 
     public override void Move()
