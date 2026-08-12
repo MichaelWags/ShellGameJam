@@ -33,15 +33,14 @@ public class Collectable : MonoBehaviour
     void FixedUpdate()
     {
         timer += Time.deltaTime;
-        magnitude = Mathf.Pow(timer, 3f) - 1.8f * Mathf.Pow(timer, 2f) + 1f;
+        magnitude = 1.8f * Mathf.Pow(2f*timer - 1f, 2f);
 
-        if(timer > 1.1f && target != null)
+        if(timer > 0.5f && target != null || timer > 3f)
         {
             movement = (target.position - transform.position).normalized;
 
             float distance = Vector3.Distance(target.position, transform.position);
-            if(distance < 0.5f){
-                Debug.Log("got collectable");
+            if(distance < 0.5f || timer > 3f){ //if close enough to player, collect
                 GameManager.Instance.AddProfit(profit);
                 if(isShell){GameManager.Instance.AddShell();}
                 Destroy(gameObject);

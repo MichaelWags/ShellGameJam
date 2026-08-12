@@ -24,7 +24,7 @@ public class Clam : Enemy
         sr.flipX = movement.x > 0f;
     }
 
-    public override void Move()
+    protected override void Move()
     {
         if (Vector3.Distance(playerTransform.position, transform.position) < moveRadius){
             base.animator.SetBool("isMoving", true);

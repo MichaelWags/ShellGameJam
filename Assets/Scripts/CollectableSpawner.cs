@@ -30,7 +30,7 @@ public class CollectableSpawner : MonoBehaviour
     {
         Debug.Log("here");
 
-        int amount = Random.Range(max, min);
+        int amount = Random.Range(min, max);
         for(int i = 0; i < amount; i++)
         {
             yield return new WaitForSeconds(delay *= 0.9f);

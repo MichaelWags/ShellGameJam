@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 2913674368662536033}
   - component: {fileID: 4064948713470483194}
   - component: {fileID: 8025505737342859708}
-  - component: {fileID: -5391687942080384629}
+  - component: {fileID: 5616837102746009177}
   m_Layer: 0
-  m_Name: Coin
+  m_Name: SnailShell
   m_TagString: Collectable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -85,7 +85,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 9
   m_MaskInteraction: 0
-  m_Sprite: {fileID: 780003782, guid: 7191d4a2aa08b794d9b262d3dcca608a, type: 3}
+  m_Sprite: {fileID: -1620914259, guid: 8222c1a79e46ecd4c949a0e8856f78ed, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -108,9 +108,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Collectable
   target: {fileID: 0}
-  speed: 7
-  profit: 1
-  isShell: 0
+  speed: 5
+  profit: 5
+  isShell: 1
 --- !u!50 &4064948713470483194
 Rigidbody2D:
   serializedVersion: 5
@@ -184,7 +184,7 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!82 &-5391687942080384629
+--- !u!82 &5616837102746009177
 AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

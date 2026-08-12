@@ -50,6 +50,8 @@ public class GameManager : MonoBehaviour
         shells = 0;
         gameTime = 0f;
         profit = 0f;
+        Time.timeScale = 1f;
+        isPaused = false;
     }
 
     public void EndGame()

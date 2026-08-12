@@ -56,7 +56,6 @@ public class PlayerController : MonoBehaviour, IDamageable
     {
         health = healthMax;
         GameManager.Instance.playerHealth = health;
-        GameManager.Instance.playerHealthMax = healthMax;
     }
 
     private void OnEnable()
@@ -93,6 +92,8 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void LateUpdate()
     {
+        GameManager.Instance.playerHealthMax = healthMax;
+        
         /*Vector2 snapped;
         snapped.x = Mathf.Round(rb.position.x * 16f) / 16f;
         snapped.y = Mathf.Round(rb.position.y * 16f) / 16f;

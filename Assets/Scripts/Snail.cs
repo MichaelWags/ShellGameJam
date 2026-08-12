@@ -7,7 +7,9 @@ public class Snail : Enemy
     //VARIABLES
     [SerializeField] private float moveXDir = 0f;
     [SerializeField] private float moveYDir = 0f;
-    LayerMask snailLayerMask;
+    private LayerMask snailLayerMask;
+    [SerializeField] private GameObject snailShellPrefab;
+    [SerializeField] private Sprite snailShellSprite;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected override void Start()
@@ -28,13 +30,21 @@ public class Snail : Enemy
         animator.SetBool("isUp", moveYDir > 0f);
     }
 
-    public override void Move()
+    protected override void Move()
     {
         //movement.x = Mathf.Round(moveXDir * moveSpeed * Time.fixedDeltaTime * 16f) / 16f;
         //movement.y = Mathf.Round(moveYDir * moveSpeed * Time.fixedDeltaTime * 16f) / 16f;
         movement.x = moveXDir * moveSpeed * Time.fixedDeltaTime;
         movement.y = moveYDir * moveSpeed * Time.fixedDeltaTime;
         rb.MovePosition(rb.position + movement);
+    }
+
+    public override void TakeDamage(float damageAmount)
+    {
+        base.TakeDamage(damageAmount);
+
+        GameObject drop = Instantiate(snailShellPrefab, transform.position, Quaternion.identity);
+        drop.GetComponent<SpriteRenderer>().sprite = snailShellSprite;
     }
 
     void FixedUpdate()
@@ -45,7 +55,7 @@ public class Snail : Enemy
             RaycastHit2D rightHit = Physics2D.Raycast(transform.position, new Vector2(moveYDir, -moveXDir), 0.7f, snailLayerMask); //check to the right (relative) of snail
             RaycastHit2D leftHit = Physics2D.Raycast(transform.position, new Vector2(-moveYDir, moveXDir), 0.7f, snailLayerMask); //check to the left (relative) of snail
 
-            Debug.Log("right " + rightHit + " left " + leftHit);
+            //Debug.Log("right " + rightHit + " left " + leftHit);
 
             if (!rightHit)//move right relative
             {

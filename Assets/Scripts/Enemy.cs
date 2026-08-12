@@ -46,7 +46,7 @@ public class Enemy : MonoBehaviour, IDamageable
         if(canMove){Move();}
     }
 
-    public virtual void Move()
+    protected virtual void Move()
     {
         //
     }

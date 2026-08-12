@@ -143,6 +143,8 @@ MonoBehaviour:
   enemyProfit: 10
   moveXDir: 1
   moveYDir: 0
+  snailShellPrefab: {fileID: 8931460757438123502, guid: 0c88ee5d3fb973b4fbbe1d8e9fb37f79, type: 3}
+  snailShellSprite: {fileID: 209001419, guid: 8222c1a79e46ecd4c949a0e8856f78ed, type: 3}
 --- !u!95 &3673703508266989398
 Animator:
   serializedVersion: 7
