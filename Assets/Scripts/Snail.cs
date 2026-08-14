@@ -15,7 +15,7 @@ public class Snail : Enemy
     protected override void Start()
     {
         base.Start();
-        snailLayerMask = ~LayerMask.GetMask("Players", "Spawners");
+        snailLayerMask = LayerMask.GetMask("Collisions", "Enemies");
     }
 
     // Update is called once per frame
