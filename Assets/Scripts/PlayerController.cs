@@ -55,7 +55,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     void Start()
     {
         health = healthMax;
-        GameManager.Instance.playerHealth = health;
+        LevelManager.Instance.playerHealth = health;
     }
 
     private void OnEnable()
@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour, IDamageable
 
     private void LateUpdate()
     {
-        GameManager.Instance.playerHealthMax = healthMax;
+        LevelManager.Instance.playerHealthMax = healthMax;
         
         /*Vector2 snapped;
         snapped.x = Mathf.Round(rb.position.x * 16f) / 16f;
@@ -165,7 +165,7 @@ public class PlayerController : MonoBehaviour, IDamageable
     public void TakeDamage(float damageAmount)
     {
         health -= damageAmount;
-        GameManager.Instance.playerHealth = health;
+        LevelManager.Instance.playerHealth = health;
         if(health <= 0f)
         {
             StartCoroutine(Die());

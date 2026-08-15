@@ -2,9 +2,9 @@ using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class LevelManager : MonoBehaviour
 {
-    public static GameManager Instance { get; private set; }
+    public static LevelManager Instance { get; private set; }
 
     private void Awake()
     {
@@ -16,6 +16,8 @@ public class GameManager : MonoBehaviour
 
         Instance = this;
     }
+
+    public int levelIndex = 0;
 
     public float playerHealth = 0f;
     public float playerHealthMax = 0f;

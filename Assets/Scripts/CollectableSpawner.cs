@@ -7,6 +7,7 @@ public class CollectableSpawner : MonoBehaviour
     [SerializeField] private int min = 1;
     [SerializeField] private int max = 3;
     [SerializeField] private float delay = 0.1f;
+    [SerializeField] private int shellIndex = 0;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -34,7 +35,8 @@ public class CollectableSpawner : MonoBehaviour
         for(int i = 0; i < amount; i++)
         {
             yield return new WaitForSeconds(delay *= 0.9f);
-            Instantiate(collectablePrefab, transform.position, transform.rotation);
+            GameObject newCollectable = Instantiate(collectablePrefab, transform.position, transform.rotation);
+            newCollectable.GetComponent<Collectable>().shellIndex = shellIndex;
         }
 
         Destroy(gameObject);

@@ -127,6 +127,24 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Save"",
+                    ""type"": ""Button"",
+                    ""id"": ""15d7239b-035a-4243-98ad-13d7cd9aabe4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Load"",
+                    ""type"": ""Button"",
+                    ""id"": ""11ad227f-a14f-4013-8368-630ecb2d62c9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -283,6 +301,28 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
                     ""action"": ""OpenStats"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6f6f02e6-61a1-4702-88b3-17d1836f95b9"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Save"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""30c122fc-fd3a-4970-bf4f-bb5cdfc98557"",
+                    ""path"": ""<Keyboard>/l"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Load"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -295,6 +335,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         m_Movement_Draw = m_Movement.FindAction("Draw", throwIfNotFound: true);
         m_Movement_Pause = m_Movement.FindAction("Pause", throwIfNotFound: true);
         m_Movement_OpenStats = m_Movement.FindAction("OpenStats", throwIfNotFound: true);
+        m_Movement_Save = m_Movement.FindAction("Save", throwIfNotFound: true);
+        m_Movement_Load = m_Movement.FindAction("Load", throwIfNotFound: true);
     }
 
     ~@PlayerControls()
@@ -379,6 +421,8 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
     private readonly InputAction m_Movement_Draw;
     private readonly InputAction m_Movement_Pause;
     private readonly InputAction m_Movement_OpenStats;
+    private readonly InputAction m_Movement_Save;
+    private readonly InputAction m_Movement_Load;
     /// <summary>
     /// Provides access to input actions defined in input action map "Movement".
     /// </summary>
@@ -406,6 +450,14 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Movement/OpenStats".
         /// </summary>
         public InputAction @OpenStats => m_Wrapper.m_Movement_OpenStats;
+        /// <summary>
+        /// Provides access to the underlying input action "Movement/Save".
+        /// </summary>
+        public InputAction @Save => m_Wrapper.m_Movement_Save;
+        /// <summary>
+        /// Provides access to the underlying input action "Movement/Load".
+        /// </summary>
+        public InputAction @Load => m_Wrapper.m_Movement_Load;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -444,6 +496,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @OpenStats.started += instance.OnOpenStats;
             @OpenStats.performed += instance.OnOpenStats;
             @OpenStats.canceled += instance.OnOpenStats;
+            @Save.started += instance.OnSave;
+            @Save.performed += instance.OnSave;
+            @Save.canceled += instance.OnSave;
+            @Load.started += instance.OnLoad;
+            @Load.performed += instance.OnLoad;
+            @Load.canceled += instance.OnLoad;
         }
 
         /// <summary>
@@ -467,6 +525,12 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
             @OpenStats.started -= instance.OnOpenStats;
             @OpenStats.performed -= instance.OnOpenStats;
             @OpenStats.canceled -= instance.OnOpenStats;
+            @Save.started -= instance.OnSave;
+            @Save.performed -= instance.OnSave;
+            @Save.canceled -= instance.OnSave;
+            @Load.started -= instance.OnLoad;
+            @Load.performed -= instance.OnLoad;
+            @Load.canceled -= instance.OnLoad;
         }
 
         /// <summary>
@@ -535,5 +599,19 @@ public partial class @PlayerControls: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnOpenStats(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Save" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSave(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Load" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnLoad(InputAction.CallbackContext context);
     }
 }

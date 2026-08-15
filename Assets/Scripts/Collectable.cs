@@ -11,6 +11,7 @@ public class Collectable : MonoBehaviour
     public float profit = 3f;
     public bool isShell = false;
     private float randXMag = 0f;
+    public int shellIndex;
 
     void Awake()
     {
@@ -40,9 +41,10 @@ public class Collectable : MonoBehaviour
             movement = (target.position - transform.position).normalized;
 
             float distance = Vector3.Distance(target.position, transform.position);
+
             if(distance < 0.5f || timer > 3f){ //if close enough to player, collect
-                GameManager.Instance.AddProfit(profit);
-                if(isShell){GameManager.Instance.AddShell();}
+                LevelManager.Instance.AddProfit(profit);
+                if(isShell){LevelManager.Instance.AddShell(); SaveData.Instance.levelProgress.levels[LevelManager.Instance.levelIndex].shells[shellIndex].wasCollected = true;}
                 Destroy(gameObject);
             }
         }

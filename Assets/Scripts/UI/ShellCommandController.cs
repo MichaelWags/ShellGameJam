@@ -18,8 +18,8 @@ public class ShellCommandController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        if(gameObject.name == "ShellCommand"){GameManager.Instance.shellCommandController = this;}
-        if(gameObject.name == "OptionsMenu"){GameManager.Instance.optionsMenu = this;}
+        if(gameObject.name == "ShellCommand"){LevelManager.Instance.shellCommandController = this;}
+        if(gameObject.name == "OptionsMenu"){LevelManager.Instance.optionsMenu = this;}
         img = GetComponent<Image>();
         if(!isOpen){isOpen = true; ToggleOpen();}
     }
