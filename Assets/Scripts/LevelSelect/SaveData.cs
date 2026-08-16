@@ -25,6 +25,7 @@ public class SaveData : MonoBehaviour
 
         instance = this;
 
+        OnSave();
         OnLoad();
 
         DontDestroyOnLoad(gameObject);
@@ -68,11 +69,23 @@ public class LevelProgress
 [System.Serializable]
 public class Level
 {
-    public int collectedShells = 0;
     public string name;
-    public bool wasBeat = false;
+    public bool wasBeat;
     public bool isSelectable = true;
     public List<Shells> shells = new List<Shells>();
+
+    public int CollectedShells()
+    {
+        int collectedShells = 0;
+        foreach (Shells shells in shells)
+        {
+            if (shells.wasCollected)
+            {
+                collectedShells++;
+            }
+        }
+        return collectedShells;
+    }
 }
 
 [System.Serializable]

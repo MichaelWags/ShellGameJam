@@ -3,16 +3,28 @@ using UnityEngine;
 
 public class SceneManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    public static SceneManager Instance
     {
-        
+        get
+        {
+            return instance;
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    private static SceneManager instance = null;
+
+    private void Awake()
     {
-        
+        if (instance)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+
+        instance = this;
+
+        DontDestroyOnLoad(gameObject);
     }
 
     public void ChangeScene(string sceneName)

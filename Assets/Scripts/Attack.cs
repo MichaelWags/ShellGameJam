@@ -67,5 +67,12 @@ public class Attack : MonoBehaviour
             Debug.Log("collectable spawner caught");
             collision.gameObject.GetComponent<CollectableSpawner>().Collect();
         }
+
+        if (collision.gameObject.CompareTag("LevelSelector"))
+        {
+            Debug.Log("level selector caught");
+            string levelScene = collision.gameObject.GetComponent<LevelSelector>().levelIndex.ToString();
+            SceneManager.Instance.ChangeScene("Level_"+levelScene+"_Scene");
+        }
     }
 }

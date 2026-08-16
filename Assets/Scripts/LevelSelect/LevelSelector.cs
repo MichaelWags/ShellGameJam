@@ -9,11 +9,19 @@ public class LevelSelector : MonoBehaviour
     public int levelIndex = 0;
     [SerializeField] private GameObject levelInfoUI;
     private Level level;
+    private Animator animator;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         level = SaveData.Instance.GetLevel(levelIndex);
+        animator = GetComponent<Animator>();
+        animator.SetBool("wasBeat", level.wasBeat);
+
+
+
+        animator.SetBool("allShells", level.CollectedShells() >= level.shells.Count);
+        
     }
 
     void OnTriggerEnter2D(Collider2D other)
@@ -22,7 +30,7 @@ public class LevelSelector : MonoBehaviour
         {
             Debug.Log("Player here");
             levelInfoUI.SetActive(true);
-            levelInfoUI.GetComponentInChildren<TextMeshProUGUI>().text = levelIndex + ". " + level.name + "   Shells: " + level.collectedShells + "/" + level.shells.Count;
+            levelInfoUI.GetComponentInChildren<TextMeshProUGUI>().text = levelIndex + ". " + level.name + "   Shells: " + level.CollectedShells() + "/" + level.shells.Count;
         }
     }
 

@@ -2,14 +2,27 @@ using UnityEngine;
 
 public class SettingsManager : MonoBehaviour
 {
-    //private FMOD.Studio.Bus masterBus;
-    //private static bool isMuted = false;
-    //private string busPath = "bus:/";
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public static SettingsManager Instance
     {
-        //masterBus = FMODUnity.RuntimeManager.GetBus(busPath);
+        get
+        {
+            return instance;
+        }
+    }
+
+    private static SettingsManager instance = null;
+
+    private void Awake()
+    {
+        if (instance)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+
+        instance = this;
+
+        DontDestroyOnLoad(gameObject);
     }
 
     // Update is called once per frame
